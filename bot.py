@@ -201,17 +201,18 @@ async def auto_post():
     if channel is None:
         return
 
-    # رسالة إيجابية + نكتة في نشر يومي واحد
+    # رسالة إيجابية + نكتة في نشر يومي واحد (نص عادي عشان يبين بالإشعار)
     msg = random.choice(POSITIVE_MESSAGES)
     joke = random.choice(JOKES)
 
     content, allowed = build_ping()
+    ping = (content + "\n\n") if content else ""
+
     await channel.send(
-        content=content,
-        embed=make_embed("🌸 رسالة اليوم", msg, 0x7DD3FC),
+        content=f"{ping}🌸 **رسالة اليوم**\n{msg}",
         allowed_mentions=allowed,
     )
-    await channel.send(embed=make_embed("😂 نكتة اليوم", joke, 0xFDE047))
+    await channel.send(content=f"😂 **نكتة اليوم**\n{joke}")
 
 
 @auto_post.before_loop
