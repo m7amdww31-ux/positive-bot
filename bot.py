@@ -163,6 +163,16 @@ async def joke_prefix(ctx):
     await ctx.send(embed=make_embed("😂 نكتة", joke, 0xFDE047))
 
 
+@bot.command(name="مساعدة")
+async def help_prefix(ctx):
+    desc = (
+        "**#ايجابية** أو **/ايجابية** — رسالة إيجابية تفرّح يومك 🌸\n"
+        "**#نكتة** أو **/نكتة** — نكتة حلوة تضحكك 😄\n"
+        "**#مساعدة** — عرض هالقائمة"
+    )
+    await ctx.send(embed=make_embed("📋 الأوامر", desc, 0xA78BFA))
+
+
 # ---------- النشر التلقائي (مرة وحدة كل 24 ساعة) ----------
 @tasks.loop(minutes=1)
 async def auto_post():
