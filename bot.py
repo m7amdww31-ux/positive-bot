@@ -138,53 +138,48 @@ async def on_ready():
 @bot.tree.command(name="ايجابية", description="رسالة إيجابية تفرّح يومك 🌸")
 async def positive_slash(interaction: discord.Interaction):
     msg = random.choice(POSITIVE_MESSAGES)
-    await interaction.response.send_message(
-        embed=make_embed("✨ رسالة إيجابية", msg, 0x7DD3FC)
-    )
+    await interaction.response.send_message(f"🌸 **رسالة إيجابية**\n{msg}")
 
 
 @bot.tree.command(name="نكتة", description="نكتة حلوة تضحكك 😄")
 async def joke_slash(interaction: discord.Interaction):
     joke = random.choice(JOKES)
-    await interaction.response.send_message(
-        embed=make_embed("😂 نكتة", joke, 0xFDE047)
-    )
+    await interaction.response.send_message(f"😂 **نكتة**\n{joke}")
 
 
 @bot.tree.command(name="مساعدة", description="عرض كل الأوامر")
 async def help_slash(interaction: discord.Interaction):
     desc = (
-        "**/ايجابية** — رسالة إيجابية تفرّح يومك 🌸\n"
-        "**/نكتة** — نكتة حلوة تضحكك 😄\n"
-        "**/مساعدة** — عرض هالقائمة\n\n"
-        "تقدرين كمان تستخدمين: `#ايجابية` و `#نكتة`"
+        "📋 **الأوامر**\n"
+        "**/ايجابية** أو **#ايجابية** — رسالة إيجابية تفرّح يومك 🌸\n"
+        "**/نكتة** أو **#نكتة** — نكتة حلوة تضحكك 😄\n"
+        "**/مساعدة** أو **#مساعدة** — عرض هالقائمة"
     )
-    await interaction.response.send_message(
-        embed=make_embed("📋 الأوامر", desc, 0xA78BFA)
-    )
+    await interaction.response.send_message(desc)
 
 
-# ---------- أوامر البادئة (!) ----------
+# ---------- أوامر البادئة (#) ----------
 @bot.command(name="ايجابية")
 async def positive_prefix(ctx):
     msg = random.choice(POSITIVE_MESSAGES)
-    await ctx.send(embed=make_embed("✨ رسالة إيجابية", msg, 0x7DD3FC))
+    await ctx.send(f"🌸 **رسالة إيجابية**\n{msg}")
 
 
 @bot.command(name="نكتة")
 async def joke_prefix(ctx):
     joke = random.choice(JOKES)
-    await ctx.send(embed=make_embed("😂 نكتة", joke, 0xFDE047))
+    await ctx.send(f"😂 **نكتة**\n{joke}")
 
 
 @bot.command(name="مساعدة")
 async def help_prefix(ctx):
     desc = (
+        "📋 **الأوامر**\n"
         "**#ايجابية** أو **/ايجابية** — رسالة إيجابية تفرّح يومك 🌸\n"
         "**#نكتة** أو **/نكتة** — نكتة حلوة تضحكك 😄\n"
         "**#مساعدة** — عرض هالقائمة"
     )
-    await ctx.send(embed=make_embed("📋 الأوامر", desc, 0xA78BFA))
+    await ctx.send(desc)
 
 
 # ---------- النشر التلقائي (مرة وحدة كل 24 ساعة) ----------
