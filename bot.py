@@ -26,6 +26,9 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 AUTO_CHANNEL_ID = os.getenv("AUTO_CHANNEL_ID")
 # ساعة النشر اليومي بتوقيت الرياض (مرة وحدة كل 24 ساعة). مثال: 9 يعني 9 الصبح
 DAILY_POST_HOUR = int(os.getenv("DAILY_POST_HOUR", "9"))
+# المنشن وقت النشر التلقائي عشان يجي إشعار وينقّر (اختياري)
+# القيم: @everyone أو @here أو رقم ID الرول
+PING_MENTION = os.getenv("PING_MENTION", "").strip()
 
 # ===================== المحتوى =====================
 POSITIVE_MESSAGES = [
@@ -105,6 +108,17 @@ def make_embed(title, description, color):
     embed = discord.Embed(title=title, description=description, color=color)
     embed.set_footer(text="زاويتنا 🤍")
     return embed
+
+
+def build_ping():
+    """يرجّع نص المنشن وإعدادات السماح به. يرجّع (content, allowed_mentions)."""
+    if not PING_MENTION:
+        return None, None
+    if PING_MENTION in ("@everyone", "@here"):
+        return PING_MENTION, discord.AllowedMentions(everyone=True)
+    if PING_MENTION.isdigit():
+        return f"<@&{PING_MENTION}>", discord.AllowedMentions(roles=True)
+    return PING_MENTION, discord.AllowedMentions(everyone=True, roles=True)
 
 
 @bot.event
@@ -190,7 +204,13 @@ async def auto_post():
     # رسالة إيجابية + نكتة في نشر يومي واحد
     msg = random.choice(POSITIVE_MESSAGES)
     joke = random.choice(JOKES)
-    await channel.send(embed=make_embed("🌸 رسالة اليوم", msg, 0x7DD3FC))
+
+    content, allowed = build_ping()
+    await channel.send(
+        content=content,
+        embed=make_embed("🌸 رسالة اليوم", msg, 0x7DD3FC),
+        allowed_mentions=allowed,
+    )
     await channel.send(embed=make_embed("😂 نكتة اليوم", joke, 0xFDE047))
 
 
