@@ -98,7 +98,7 @@ JOKES = [
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="#", intents=intents)
 
 
 def make_embed(title, description, color):
@@ -143,7 +143,7 @@ async def help_slash(interaction: discord.Interaction):
         "**/ايجابية** — رسالة إيجابية تفرّح يومك 🌸\n"
         "**/نكتة** — نكتة حلوة تضحكك 😄\n"
         "**/مساعدة** — عرض هالقائمة\n\n"
-        "تقدرين كمان تستخدمين: `!ايجابية` و `!نكتة`"
+        "تقدرين كمان تستخدمين: `#ايجابية` و `#نكتة`"
     )
     await interaction.response.send_message(
         embed=make_embed("📋 الأوامر", desc, 0xA78BFA)
